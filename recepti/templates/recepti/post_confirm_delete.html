@@ -10,7 +10,7 @@
 
             <fieldset class="form-group">
 
-                <legend class="border-bottom mb-4">Obriši objavut</legend>
+                <legend class="border-bottom mb-4">Obriši objavu</legend>
 
                 <h2>Jeste li sigurni da želite obrisati objavu "{{ object.title }}"</h2>
 
@@ -20,7 +20,7 @@
 
                 <button class="btn btn-outline-danger" type="submit">Da, Obriši</button>
 
-                <a class="btn btn-outline-secondary" href="{% url 'post-detail' object.id %}">Cancel</a>
+                <a class="btn btn-outline-secondary" href="{% url 'post-detail' object.id %}">Odustani</a>
 
             </div>
 

@@ -14,9 +14,11 @@ class Post(models.Model):
 
     title = models.CharField(max_length=100)
 
+    summary = models.TextField(max_length=200, default='Super recept! Usudi se probati...')
+
     content = models.TextField()
 
-    image = models.ImageField(default='media\post_pics\default.png')
+    image = models.ImageField(default='media\post_pics\default.jpg')
 
     date_posted = models.DateTimeField(default=timezone.now)
 
