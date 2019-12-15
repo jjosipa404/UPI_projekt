@@ -81,30 +81,30 @@ class UserPostListView(ListView):
 
     def get_queryset(self):
         user = get_object_or_404(User, username=self.kwargs.get('username'))
-        return Post.objects.filter(author=user).order_by('-date_posted')
+        return Post.objects.filter(autor=user).order_by('-date_posted')
 
 class PostDetailView(DetailView):
     model = Post
 
 class PostCreateView(LoginRequiredMixin, CreateView):
     model = Post
-    fields = ['title', 'summary', 'content', 'image']
+    fields = ['naslov', 'sazetak', 'sadrzaj', 'slika']
 
     def form_valid(self, form):
-        form.instance.author = self.request.user
+        form.instance.autor = self.request.user
         return super().form_valid(form)
 
 class PostUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = Post
-    fields = ['title', 'summary', 'content', 'image']
+    fields = ['naslov', 'sazetak', 'sadrzaj', 'slika']
 
     def form_valid(self, form):
-        form.instance.author = self.request.user
+        form.instance.autor = self.request.user
         return super().form_valid(form)
 
     def test_func(self):
         post = self.get_object()
-        if self.request.user == post.author:
+        if self.request.user == post.autor:
             return True
         return False
 
@@ -114,7 +114,7 @@ class PostDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
 
     def test_func(self):
         post = self.get_object()
-        if self.request.user == post.author:
+        if self.request.user == post.autor:
             return True
         return False
 

@@ -5,33 +5,36 @@ from django.utils import timezone
 from django.contrib.auth.models import User
 
 from django.urls import reverse
+from PIL import Image
 
 
 
 # Create your models here.
+
 #SQL modeli
 class Post(models.Model):
 
-    title = models.CharField(max_length=100)
+    naslov = models.CharField(max_length=100)
 
-    summary = models.TextField(max_length=200, default='Super recept! Usudi se probati...')
+    sazetak = models.TextField(max_length=200, default='Super recept! Usudi se probati...')
 
-    content = models.TextField()
+    sadrzaj = models.TextField()
 
-    image = models.ImageField(default='media\post_pics\default.jpg')
+    slika = models.ImageField(default='default.png', upload_to='post_pics')
 
     date_posted = models.DateTimeField(default=timezone.now)
 
-    author = models.ForeignKey(User, on_delete=models.CASCADE)
+    autor = models.ForeignKey(User, on_delete=models.CASCADE)
 
-
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)
+        img = Image.open(self.slika.path)
+        img.save(self.slika.path)
 
     def __str__(self):
-
-        return self.title
+        return self.naslov
 
 
 
     def get_absolute_url(self):
-
         return reverse('post-detail', kwargs={'pk': self.pk})

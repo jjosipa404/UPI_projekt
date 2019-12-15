@@ -4,17 +4,17 @@
 
   <article class="media content-section">
 
-    <img class="rounded-circle article-img" src="{{ object.author.profile.image.url }}">
+    <img class="rounded-circle article-img" src="{{ object.autor.profile.image.url }}">
 
     <div class="media-body">
 
       <div class="article-metadata">
 
-        <a class="mr-2" href="{% url 'user-posts' object.author.username %}">{{ object.author }}</a>
+        <a class="mr-2" href="{% url 'user-posts' object.autor.username %}">{{ object.autor }}</a>
 
         <small class="text-muted">{{ object.date_posted|date:"F d, Y" }}</small>
 
-        {% if object.author == user %}
+        {% if object.autor == user %}
           <div>
             <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{% url 'post-update' object.id %}">Ažuriraj</a>
             <a class="btn btn-danger btn-sm mt-1 mb-1" href="{% url 'post-delete' object.id %}">Obriši</a>
@@ -22,9 +22,10 @@
         {% endif %}
       </div>
 
-      <h2 class="article-title">{{ object.title }}</h2>
-      <p class="article-title">{{ object.summary }}</p>
-      <p class="article-content">{{ object.content }}</p>
+      <h2 class="article-title">{{ object.naslov }}</h2>
+      <p class="article-title">{{ object.sazetak }}</p>
+      <img src="{{ object.slika.url }}">
+      <p class="article-content">{{ object.sadrzaj }}</p>
       <div class="btn-group" role="group" aria-label="Basic example">
           <button type="button" class="btn btn-secondary">Sviđa mi se</button>
           <button type="button" class="btn btn-secondary">Komentiraj</button>

@@ -34,6 +34,7 @@ INSTALLED_APPS = [
     'recepti.apps.ReceptiConfig',
     'users.apps.UsersConfig',
     'crispy_forms',
+    'grappelli',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -106,7 +107,7 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/3.0/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'hr'
 
 TIME_ZONE = 'UTC'
 

@@ -21,6 +21,8 @@ from django.conf.urls.static import static
 from users import views as user_views
 
 urlpatterns = [
+    path('grappelli', include('grappelli.urls')),
+    
     path('admin/', admin.site.urls),
     #path('recepti/', include('recepti.urls')),
     path('register/', user_views.register, name='register'),

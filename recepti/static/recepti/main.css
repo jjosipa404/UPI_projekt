@@ -1,10 +1,14 @@
-body {
-    background:#333333;
+body { 
+    
     color: #333333;
     margin-top: 5rem;
     
   }
-
+  /*
+body {
+    background: url(fina_juhica.jpg) rgb(28, 28, 34);
+  }*/
+  
 h1, h2, h3, h4, h5, h6 {
     color: #444444;
 }
