@@ -1,49 +1,7 @@
-from django.shortcuts import render
 from django.http import HttpResponse
-
-#posts = [
- #   {
-  #      'autor':'Ana Maria',
-   #     'naziv':'Kokos keksići',
-    #    'sastojci':'200g kokosa, 80g šećera, 1 vanilin šećer, 50g brašna, 2 žlice praška za pecivo, 1 žlica margarina, 1 jaje',
-     #   'postupak':'Sve suhe sastojke zajedno pomiješati, dodati omekšali margarin i jaje te dobro izmijesti u glatko tijesto. '+
-      #   'Umotati u prozirnu foliju i ostaviti oko pola sata u hladnjak. Žličicom vaditi komade i oblikovati kuglice.' +
-       #  'Staviti na lim obložn pek-papirom te malo utisnuti. Peći na 180°C oko 10-12 minuta do željene boje.' +
-        # 'Ostavit da se ohlade. Po želji ukrasiti sa čokoladom.' +
-         #'Smjesa je dovoljna za 50-tak komada. ',
-        #'datum':'6.12.2019.'
-   # },
-   # {
-    #    'autor':'Biserka',
-     #   'naziv':'Fina kremasta juhica',
-    #   'sastojci':'5-6 krumpira, 4 manje glavice luka, 1.5-2L vode,'+
-     #  'Kajenski papar, maslinovo ulje, slanina, vegeta',
-      #  'postupak':'Na maslinovom ulju popržiti luk dok ne pozlatni te dodati slaninu i malo popržiti.'+
-       # 'Zatim dodati krumpir te dinstati uz povremeno miješanje podlijevajući vodom da ne zagori. Dodati kajenski papar i vegetu. '+
-       # 'Uliti vode i kuhati dok krumpir ne omekša. Kad je krumpir skuhan, sve zajedno štapnim mikserom usitniti i još par minuta prokuhati.',
-       # 'datum':'7.12.2019.'
-    #}
-#]
-
-# Create your views here.
-#def home(request):
- #   context = {
-  #      'posts' : posts
-   # }
-    #return render(request, 'recepti/home.html', context)
-
-
-#def about(request):
- #   return render(request, 'recepti/about.html')
-    
-
-#--------------------------------------------------------------------
 from django.shortcuts import render, get_object_or_404
-
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
-
 from django.contrib.auth.models import User
-
 from django.views.generic import (
 
     ListView,
@@ -58,7 +16,7 @@ from django.views.generic import (
 
 )
 
-from .models import Post
+from .models import Post, Comment
 
 def home(request):
     context = {
@@ -92,6 +50,15 @@ class PostCreateView(LoginRequiredMixin, CreateView):
 
     def form_valid(self, form):
         form.instance.autor = self.request.user
+        return super().form_valid(form)
+
+class CommentCreateView(LoginRequiredMixin, CreateView):
+    model = Comment
+    fields = ['content']
+
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        form.instance.post = self.request.post
         return super().form_valid(form)
 
 class PostUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):

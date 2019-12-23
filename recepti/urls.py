@@ -23,7 +23,9 @@ from .views import (
 
     PostDeleteView,
 
-    UserPostListView
+    UserPostListView,
+
+    CommentCreateView
 
 )
 
@@ -45,6 +47,8 @@ urlpatterns = [
 
     path('post/<int:pk>/delete/', PostDeleteView.as_view(), name='post-delete'),
 
-    path('about/', views.about, name='recepti-about'),
+    path('post/comment/', CommentCreateView.as_view(), name='post-comment'),
+
+    path('about/', views.about, name='recepti-about')
 
 ]

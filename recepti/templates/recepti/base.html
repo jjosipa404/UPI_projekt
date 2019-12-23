@@ -5,11 +5,12 @@
 <head>
   <!-- Required meta tags -->
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=yes">
   
   <!-- Bootstrap CSS -->
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
   <link rel="stylesheet" type="text/css" href="{% static 'recepti/main.css' %}">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
   {% if title %}
   <title>Recepti-{{ title }}</title>
@@ -24,7 +25,7 @@
           
                   <div class="container">
           
-                    <a class="navbar-brand mr-4" href="{% url 'recepti-home' %}">Recepti</a>
+                    <a class="navbar-brand mr-4" href="{% url 'recepti-home' %}"><i class="fa fa-cutlery" aria-hidden="true"></i> Recepti</a>
           
                     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggle" aria-controls="navbarToggle" aria-expanded="false" aria-label="Toggle navigation">
           
@@ -36,7 +37,7 @@
           
                       <div class="navbar-nav mr-auto">
           
-                        <a class="nav-item nav-link" href="{% url 'recepti-home' %}">Naslovna</a>
+                        <a class="nav-item nav-link" href="{% url 'recepti-home' %}"><i class="fa fa-home" aria-hidden="true"></i> Naslovna</a>
           
                         <a class="nav-item nav-link" href="{% url 'recepti-about' %}">O nama</a>
           
@@ -50,7 +51,7 @@
           
                           <a class="nav-item nav-link" href="{% url 'post-create' %}">Novi post</a>
           
-                          <a class="nav-item nav-link" href="{% url 'profile' %}">Profil</a>
+                          <a class="nav-item nav-link" href="{% url 'profile' %}"><i class="fa fa-user" aria-hidden="true"></i> Profil</a>
           
                           <a class="nav-item nav-link" href="{% url 'logout' %}">Odjavi se</a>
           
