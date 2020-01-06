@@ -1,31 +1,16 @@
 {% extends "recepti/base.html" %}
-
 {% block content %}
-
     <div class="content-section">
-
         <form method="POST">
-
             {% csrf_token %}
-
             <fieldset class="form-group">
-
                 <legend class="border-bottom mb-4">Obriši objavu</legend>
-
                 <h2>Jeste li sigurni da želite obrisati objavu "{{ object.naslov }}"</h2>
-
             </fieldset>
-
             <div class="form-group">
-
                 <button class="btn btn-outline-danger" type="submit">Da, Obriši</button>
-
                 <a class="btn btn-outline-secondary" href="{% url 'post-detail' object.id %}">Odustani</a>
-
             </div>
-
         </form>
-
     </div>
-
 {% endblock content %}

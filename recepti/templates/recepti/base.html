@@ -20,58 +20,36 @@
 </head>
 <body>
         <header class="site-header">
-
                 <nav class="navbar navbar-expand-md navbar-dark bg-steel fixed-top">
-          
                   <div class="container">
-          
                     <a class="navbar-brand mr-4" href="{% url 'recepti-home' %}"><i class="fa fa-cutlery" aria-hidden="true"></i> Recepti</a>
-          
                     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggle" aria-controls="navbarToggle" aria-expanded="false" aria-label="Toggle navigation">
-          
                     <span class="navbar-toggler-icon"></span>
-          
                     </button>
           
                     <div class="collapse navbar-collapse" id="navbarToggle">
-          
                       <div class="navbar-nav mr-auto">
-          
                         <a class="nav-item nav-link" href="{% url 'recepti-home' %}"><i class="fa fa-home" aria-hidden="true"></i> Naslovna</a>
-          
                         <a class="nav-item nav-link" href="{% url 'recepti-about' %}">O nama</a>
-          
                       </div>
           
                       <!-- Navbar Right Side -->
-          
                       <div class="navbar-nav">
-          
                         {% if user.is_authenticated %}
-          
                           <a class="nav-item nav-link" href="{% url 'post-create' %}">Novi post</a>
-          
-                          <a class="nav-item nav-link" href="{% url 'profile' %}"><i class="fa fa-user" aria-hidden="true"></i> Profil</a>
-          
+                          <a class="nav-item nav-link" href="{% url 'profile' %}"><i class="fa fa-user" aria-hidden="true"></i> {{ user }}</a>
                           <a class="nav-item nav-link" href="{% url 'logout' %}">Odjavi se</a>
-          
                         {% else %}
-          
                           <a class="nav-item nav-link" href="{% url 'login' %}">Prijavi se</a>
-          
                           <a class="nav-item nav-link" href="{% url 'register' %}">Registriraj se</a>
           
                         {% endif %}
-          
                       </div>
-          
-                    </div>
-          
-                  </div>
-          
-                </nav>
-          
+                    </div>         
+                  </div>         
+                </nav>         
               </header>
+
               <main role="main" class="container">
                     <div class="row">
                       <div class="col-md-8">
@@ -88,37 +66,23 @@
                         <div class="content-section">
                           <h3>Pretraživanje</h3>
                           <p class='text-muted'> Pretraži recepte po kategoriji
-              
                             <ul class="list-group">
-              
                               <!--<li class="list-group-item list-group-item-light">Najpopularniji recepti</li>-->
-              
                               <li class="list-group-item list-group-item-light">Predjelo</li>
-
                               <li class="list-group-item list-group-item-light">Glavno jelo</li>
-              
                               <li class="list-group-item list-group-item-light">Desert</li>
-              
-              
                             </ul>
-              
                           </p>
-              
                         </div>
-              
                       </div>
-              
                     </div>
-              
                   </main>
                   <!-- Optional JavaScript -->
 
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
 
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 
 </body>

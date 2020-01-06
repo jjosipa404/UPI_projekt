@@ -7,11 +7,12 @@ from .views import (
     PostUpdateView,
     PostDeleteView,
     UserPostListView,
-    CommentCreateView
+    CommentCreateView,
+    CommentDeleteView,
+    CommentUpdateView
 
 )
 from . import views
-
 urlpatterns = [
 
     path('', PostListView.as_view(), name='recepti-home'),
@@ -21,6 +22,8 @@ urlpatterns = [
     path('post/<int:pk>/update/', PostUpdateView.as_view(), name='post-update'),
     path('post/<int:pk>/delete/', PostDeleteView.as_view(), name='post-delete'),
     path('post/<int:pk>/comment/', CommentCreateView.as_view(), name='post-comment'),
+    path('post/comment/<int:pk>/delete', CommentDeleteView.as_view(), name='post-comment-delete'),
+    path('post/comment/<int:pk>/update', CommentUpdateView.as_view(), name='post-comment-update'),
     path('about/', views.about, name='recepti-about')
 
 ]

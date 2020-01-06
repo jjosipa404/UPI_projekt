@@ -1,6 +1,6 @@
 {% extends "recepti/base.html" %}
 {% block content %}
-    <h1 class="mb-3">Objave korisnika: {{ view.kwargs.username }} ({{ page_obj.paginator.count }})</h1>
+    <h4 class="mb-3">Objave korisnika: {{ view.kwargs.username }} ({{ page_obj.paginator.count }})</h4>
     {% for post in posts %}
         <article class="media content-section">
           <img class="rounded-circle article-img" src="{{ post.autor.profile.image.url }}">
@@ -8,6 +8,8 @@
             <div class="article-metadata">
               <a class="mr-2" href="{% url 'user-posts' post.autor.username %}">{{ post.autor }}</a>
               <small class="text-muted">{{ post.date_posted|date:"F d, Y" }}</small>
+              <small class="">{{ post.comments.count }}</small>  <i class="fa fa-comment"></i>
+              <small>0</small>  <i class="fa fa-heart"></i><br>
             </div>
             <h2><a class="article-title" href="{% url 'post-detail' post.id %}">{{ post.naslov }}</a></h2>
             <p class="article-content">{{ post.sazetak }}</p>

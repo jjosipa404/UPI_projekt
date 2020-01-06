@@ -28,8 +28,20 @@
         </div>
         <hr>
         {% for comment in object.comments.all %}
+
         <h4>{{ comment.user }}</h4><h6>{{ comment.created }}</h6>
         <p>{{ comment.content }}</p>
+
+        {% if comment.user == user %}
+          <div>
+            <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{% url 'post-comment-update' comment.id %}">Uredi</a>
+          </div>
+        {% endif %}
+
+        {% if comment.user == user or object.autor == user %}
+          <a class="btn btn-danger btn-sm mt-1 mb-1" href="{% url 'post-comment-delete' comment.id %}">Ukloni</a>
+        {% endif %}
+
         {% empty %}
         <p> Nema komentara</p>
         {% endfor %}

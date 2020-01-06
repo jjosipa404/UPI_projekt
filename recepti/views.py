@@ -5,13 +5,9 @@ from django.contrib.auth.models import User
 from django.views.generic import (
 
     ListView,
-
     DetailView,
-
     CreateView,
-
     UpdateView,
-
     DeleteView
 
 )
@@ -75,6 +71,20 @@ class PostUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
             return True
         return False
 
+class CommentUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
+    model = Comment
+    fields = ['content']
+
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        return super().form_valid(form)
+
+    def test_func(self):
+        comment = self.get_object()
+        if self.request.user == comment.user:
+            return True
+        return False
+
 class PostDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     model = Post
     success_url = '/'
@@ -82,6 +92,16 @@ class PostDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     def test_func(self):
         post = self.get_object()
         if self.request.user == post.autor:
+            return True
+        return False
+
+class CommentDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
+    model = Comment
+    success_url = '/'
+
+    def test_func(self):
+        comment = self.get_object()
+        if self.request.user == comment.user or self.request.user == comment.post.autor:
             return True
         return False
 
