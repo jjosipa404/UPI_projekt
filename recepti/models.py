@@ -1,16 +1,13 @@
 from django.db import models
-
 from django.utils import timezone
-
 from django.contrib.auth.models import User
-
 from django.urls import reverse
 from PIL import Image
 
 
 
 # Create your models here.
-
+ 
 #SQL modeli
 class Post(models.Model):
     naslov = models.CharField(max_length=100)
@@ -45,5 +42,11 @@ class Comment(models.Model):
         self.approved = True
         self.save()
 
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)
+
     def __str__(self):
         return 'Komentar korisnika {}: {}'.format(self.user, self.content)
+    
+    def get_absolute_url(self):
+        return reverse('post-detail', kwargs={'pk': self.post.pk})

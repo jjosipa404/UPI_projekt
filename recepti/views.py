@@ -58,7 +58,7 @@ class CommentCreateView(LoginRequiredMixin, CreateView):
 
     def form_valid(self, form):
         form.instance.user = self.request.user
-        form.instance.post = self.request.post
+        form.instance.post = get_object_or_404(Post, pk=self.kwargs.get('pk'))
         return super().form_valid(form)
 
 class PostUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):

@@ -1,22 +1,15 @@
 {% extends "recepti/base.html" %}
-
 {% block content %}
 
   <article class="media content-section">
-
     <img class="rounded-circle article-img" src="{{ object.autor.profile.image.url }}">
-
     <div class="media-body">
-
       <div class="article-metadata">
-
         <a class="mr-2" href="{% url 'user-posts' object.autor.username %}">{{ object.autor }}</a>
-
         <small class="text-muted">{{ object.date_posted|date:"F d, Y" }}</small>
         <small class="">{{ object.comments.count }}</small>  <i class="fa fa-comment"></i>
         <small>0</small>  <i class="fa fa-heart"></i><br>
           
-
         {% if object.autor == user %}
           <div>
             <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{% url 'post-update' object.id %}">Ažuriraj</a>
@@ -31,20 +24,16 @@
       <p class="article-content">{{ object.sadrzaj }}</p>
       <div class="btn-group" role="group" aria-label="Basic example">
           <button type="button" class="btn btn-secondary">Sviđa mi se</button>
-          <a class="nav-item nav-link" href="{% url 'post-comment' %}">Novi komentar</a>
-
+          <a class="nav-item nav-link" href="{% url 'post-comment' object.id %}">Novi komentar</a>
         </div>
         <hr>
         {% for comment in object.comments.all %}
-        
         <h4>{{ comment.user }}</h4><h6>{{ comment.created }}</h6>
         <p>{{ comment.content }}</p>
-        
         {% empty %}
         <p> Nema komentara</p>
         {% endfor %}
     </div>
-
   </article>
 
 {% endblock content %}
