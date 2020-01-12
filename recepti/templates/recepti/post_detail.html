@@ -23,9 +23,22 @@
       <img src="{{ object.slika.url }}">
       <p class="article-content">{{ object.sadrzaj }}</p>
       <div class="btn-group" role="group" aria-label="Basic example">
-          <button type="button" class="btn btn-secondary">Sviđa mi se</button>
+          <a href="#" class="nav-item nav-link"><button type="button" class="btn btn-secondary">Sviđa mi se</button></a>
           <a class="nav-item nav-link" href="{% url 'post-comment' object.id %}">Novi komentar</a>
         </div>
+      <!--
+      <a href="#" onClick="document.getElementById('likebutton').submit()">Like This Post</a> 
+      {{object.likes}}   |   <a href="#" onClick="document.getElementById('dislikebutton').submit()">Dislike This Post</a> {{object.dislikes}}
+
+        <form id="likebutton" method="POST" action="{{ object.id }}/preference/1/">
+        {% csrf_token %}
+        <input type="hidden">
+        </form>
+        
+        <form id="dislikebutton" method="POST" action="{{ object.id }}/preference/2/">
+        {% csrf_token %}
+        <input type="hidden">
+        </form>  -->
         <hr>
         {% for comment in object.comments.all %}
 

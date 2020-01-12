@@ -13,9 +13,12 @@ class Post(models.Model):
     naslov = models.CharField(max_length=100)
     sazetak = models.TextField(max_length=200, default='Super recept! Usudi se probati...')
     sadrzaj = models.TextField()
-    slika = models.ImageField(default='default.png', upload_to='post_pics')
+    slika = models.ImageField(default='default_pict.jpg', upload_to='post_pics')
     date_posted = models.DateTimeField(default=timezone.now)
     autor = models.ForeignKey(User, on_delete=models.CASCADE)
+
+    likes= models.PositiveIntegerField(default=0)
+    dislikes= models.PositiveIntegerField(default=0)
 
     def save(self, *args, **kwargs):
         super().save(*args, **kwargs)
@@ -34,7 +37,6 @@ class Comment(models.Model):
     content = models.TextField()
     created = models.DateTimeField(auto_now_add=True)
     approved = models.BooleanField(default=False)
-
     class Meta:
         ordering = ['created']
         
@@ -50,3 +52,22 @@ class Comment(models.Model):
     
     def get_absolute_url(self):
         return reverse('post-detail', kwargs={'pk': self.post.pk})
+
+#class Like(models.Model):
+ #   post = models.ForeignKey(Post, related_name='likes', on_delete=models.CASCADE)
+  #  user = models.ForeignKey(User, on_delete=models.CASCADE)
+   # created = models.DateTimeField(auto_now_add=True)
+
+
+class Preference(models.Model):
+    user= models.ForeignKey(User, on_delete=models.CASCADE)
+    post= models.ForeignKey(Post, related_name='preference', on_delete=models.CASCADE)
+    value= models.PositiveIntegerField()
+    date= models.DateTimeField(auto_now= True)
+
+    
+    def __str__(self):
+        return str(self.user) + ':' + str(self.post) +':' + str(self.value)
+
+    class Meta:
+       unique_together = ("user", "post", "value")

@@ -1,6 +1,7 @@
 from django.http import HttpResponse
 from django.shortcuts import render, get_object_or_404
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.views.generic import (
 
@@ -12,7 +13,8 @@ from django.views.generic import (
 
 )
 
-from .models import Post, Comment
+from .models import Post, Comment, Preference
+from .filters import PostFilter
 
 def home(request):
     context = {
@@ -26,6 +28,13 @@ class PostListView(ListView):
     context_object_name = 'posts'
     ordering = ['-date_posted']
     paginate_by = 5
+
+
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['filter'] = PostFilter(self.request.GET, queryset=self.get_queryset())
+        return context
 
 class UserPostListView(ListView):
     model = Post
@@ -104,6 +113,75 @@ class CommentDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
         if self.request.user == comment.user or self.request.user == comment.post.autor:
             return True
         return False
+
+""" @login_required
+def postpreference(request, postid, userpreference):
+    if request.method == "POST":
+        eachpost = get_object_or_404(Post, id=postid)
+        obj=''
+        valueobj=''
+        try:
+            obj= Preference.objects.get(user= request.user, post= eachpost)
+            valueobj= obj.value #value of userpreference
+            valueobj= int(valueobj)
+            userpreference= int(userpreference)
+            if valueobj != userpreference:
+                obj.delete()
+                upref= Preference()
+                upref.user= request.user
+                upref.post= eachpost
+                upref.value= userpreference
+                if userpreference == 1 and valueobj != 1:
+                    eachpost.likes += 1
+                    eachpost.dislikes -=1
+                elif userpreference == 2 and valueobj != 2:
+                    eachpost.dislikes += 1
+                    eachpost.likes -= 1
+                    upref.save()
+                    eachpost.save()
+                    context= {'eachpost': eachpost,
+                              'postid': postid}
+                    return render (request, 'recepti/home.html')
+
+                elif valueobj == userpreference:
+                    obj.delete()   
+                    if userpreference == 1:
+                        eachpost.likes -= 1
+                    elif userpreference == 2:
+                        eachpost.dislikes -= 1
+
+                    eachpost.save()
+                    context= {'eachpost': eachpost,
+                             'postid': postid}
+                    return render (request, 'recepti/home.html')
+                                
+                        
+        
+                
+        except Preference.DoesNotExist:
+            upref= Preference()
+            upref.user= request.user
+            upref.post= eachpost
+            upref.value= userpreference
+            userpreference= int(userpreference)
+            if userpreference == 1:
+                eachpost.likes += 1
+            elif userpreference == 2:
+                eachpost.dislikes +=1
+
+            upref.save()
+            eachpost.save()                            
+            context= {'eachpost': eachpost,
+                       'postid': postid}
+            return render (request, 'recepti/home.html')
+
+
+    else:
+        eachpost= get_object_or_404(Post, id=postid)
+        context= {'eachpost': eachpost,
+                  'postid': postid}
+
+        return render (request, 'posts/detail.html', context) """
 
 def about(request):
     return render(request, 'recepti/about.html', {'title': 'O nama'})

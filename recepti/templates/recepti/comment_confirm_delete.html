@@ -8,7 +8,7 @@
                 <h2>Jeste li sigurni da želite obrisati komentar: "{{ object.content }}" korisnika "{{ object.user }}"</h2>
             </fieldset>
             <div class="form-group">
-                <button class="btn btn-outline-danger" type="submit">Da, obriši</button>
+                <button class="btn btn-outline-danger" href="{% url 'post-detail' object.post.pk %}" type="submit">Da, obriši</button>
                 <a class="btn btn-outline-secondary" href="{% url 'post-detail' object.post.pk %}">Odustani</a>
             </div>
         </form>

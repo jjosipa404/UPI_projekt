@@ -24,6 +24,6 @@ urlpatterns = [
     path('post/<int:pk>/comment/', CommentCreateView.as_view(), name='post-comment'),
     path('post/comment/<int:pk>/delete', CommentDeleteView.as_view(), name='post-comment-delete'),
     path('post/comment/<int:pk>/update', CommentUpdateView.as_view(), name='post-comment-update'),
+    #path('post/<int:pk>/<int:pk>/preference/<int:preference>/',views.postpreference,name='postpreference'),
     path('about/', views.about, name='recepti-about')
-
 ]
