@@ -1,0 +1,18 @@
+{% extends "recepti/base.html" %}
+{% load crispy_forms_tags %}
+{% block content %}
+      <form method="POST">
+          {% csrf_token %}
+          <fieldset class="form-group">
+            <legend class="border-bottom mb-4">Brisanje korisničkog profila</legend>
+            <p>Jeste li sigurni da želite obrisati svoj profil? Ovo će trajno izbrisati vaš profil i sve vaše objave.</p>
+            {{ form }}
+          </fieldset>
+          <div class="form-group">
+            <button class="btn btn-danger" type="submit">Obriši</button>
+                <a class="btn btn-primary-custom" style="float:right;" 
+                   href="{% url 'profile' %}">Odustani</a>
+        </div>
+      </form>
+    </div>
+{% endblock content %}
