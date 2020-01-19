@@ -17,10 +17,10 @@
               {{ p_form|crispy }}
           </fieldset>
           <div class="form-group">
-              <button class="btn btn-outline-info" type="submit">Ažuriraj</button>
+              <button class="btn btn-secondary btn-sm mt-1 mb-1" type="submit">Ažuriraj</button>
           </div>
       </form>
-      <a class="nav-item nav-link" href="{% url 'profile-delete' %}">Obriši profil</a>
+      <a class="btn btn-danger btn-sm mt-1 mb-1" href="{% url 'profile-delete' %}">Obriši profil</a>
 
 
     </div>

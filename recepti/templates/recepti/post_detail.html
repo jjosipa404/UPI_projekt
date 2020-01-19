@@ -5,7 +5,7 @@
     <img class="rounded-circle article-img" src="{{ object.autor.profile.image.url }}">
     <div class="media-body">
       <div class="article-metadata">
-        <a class="mr-2" href="{% url 'user-posts' object.autor.username %}">{{ object.autor }}</a>
+        <a class="mr-2" id="ime" href="{% url 'user-posts' object.autor.username %}">{{ object.autor }}</a>
         <small class="text-muted">{{ object.date_posted|date:"F d, Y" }}</small>
         <small class="">{{ object.comments.count }}</small>  <i class="fa fa-comment"></i>
         <small>0</small>  <i class="fa fa-heart"></i><br>
@@ -24,7 +24,7 @@
       <p class="article-content">{{ object.sadrzaj }}</p>
       <div class="btn-group" role="group" aria-label="Basic example">
           <a href="#" class="nav-item nav-link"><button type="button" class="btn btn-secondary">Sviđa mi se</button></a>
-          <a class="nav-item nav-link" href="{% url 'post-comment' object.id %}">Novi komentar</a>
+          <a class="nav-item nav-link" href="{% url 'post-comment' object.id %}"><button type="button" class="btn btn-secondary">Novi komentar</button></a>
         </div>
       <!--
       <a href="#" onClick="document.getElementById('likebutton').submit()">Like This Post</a> 
