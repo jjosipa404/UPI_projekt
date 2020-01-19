@@ -13,14 +13,25 @@ from django.views.generic import (
 
 )
 
-from .models import Post, Comment, Preference
+from .models import Post, Comment #, Preference
 from .filters import PostFilter
 
 def home(request):
-    context = {
-        'posts': Post.objects.all()
-    }
+    postovi=Post.objects.all()
+    search=request.GET('search')
+    if search !='' and search is not None:
+        postovi=postovi.Postfilter(naslov__icontains=search)
+
+        context={
+            'posts': postovi
+        }
+    else:
+    
+        context = {
+            'posts': Post.objects.all()
+        }
     return render(request, 'recepti/home.html', context)
+
 
 class PostListView(ListView):
     model = Post
@@ -112,6 +123,7 @@ class CommentDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
         if self.request.user == comment.user or self.request.user == comment.post.autor:
             return True
         return False
+
 
 """ @login_required
 def postpreference(request, postid, userpreference):

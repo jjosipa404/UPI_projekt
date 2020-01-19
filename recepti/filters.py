@@ -1,7 +1,6 @@
 import django_filters
 from .models import Post
 
-<<<<<<< HEAD
 
 class PostFilter(django_filters.FilterSet):
 
@@ -21,11 +20,11 @@ class PostFilter(django_filters.FilterSet):
    # def filter_by_order(self, queryset, name, value):
        # expression = 'created' if value == 'ascending' else '-created'
        # return queryset.order_by(expression)
-=======
+
 class PostFilter(django_filters.FilterSet):
     class Meta:
         model=Post
         fields={
             'naslov':['icontains'],
         }
->>>>>>> e8affc1c8010feec5daebd3f494837985de1dffd
+

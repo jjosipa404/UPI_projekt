@@ -17,8 +17,9 @@ class Post(models.Model):
     date_posted = models.DateTimeField(default=timezone.now)
     autor = models.ForeignKey(User, on_delete=models.CASCADE)
 
-    likes= models.PositiveIntegerField(default=0)
-    dislikes= models.PositiveIntegerField(default=0)
+    like_count= models.IntegerField(default=0)
+    #dislikes= models.PositiveIntegerField(default=0)
+
 
     def save(self, *args, **kwargs):
         super().save(*args, **kwargs)
@@ -58,7 +59,7 @@ class Comment(models.Model):
   #  user = models.ForeignKey(User, on_delete=models.CASCADE)
    # created = models.DateTimeField(auto_now_add=True)
 
-
+'''
 class Preference(models.Model):
     user= models.ForeignKey(User, on_delete=models.CASCADE)
     post= models.ForeignKey(Post, related_name='preference', on_delete=models.CASCADE)
@@ -71,3 +72,4 @@ class Preference(models.Model):
 
     class Meta:
        unique_together = ("user", "post", "value")
+'''

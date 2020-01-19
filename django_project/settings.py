@@ -141,8 +141,7 @@ LOGIN_REDIRECT_URL = 'recepti-home'
 LOGIN_URL = 'login'
 
 
-#EMAIL_USER = 'apprecepti@gmail.com'
-#EMAIL_PASS = 'recepti2020upi'
+
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
@@ -151,7 +150,7 @@ EMAIL_USE_TLS = True
 EMAIL_HOST_USER = os.environ.get('EMAIL_USER')
 EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_PASS')
 
-#DEFAULT_EMAIL_FROM = 'apprecepti@gmail.com'
+
 
 
 
