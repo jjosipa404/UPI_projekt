@@ -38,7 +38,7 @@ class PostListView(ListView):
     template_name = 'recepti/home.html'  # <app>/<model>_<viewtype>.html
     context_object_name = 'posts'
     ordering = ['-date_posted']
-    paginate_by = 5
+    paginate_by = 12
 
     
     def get_context_data(self, **kwargs):
@@ -50,18 +50,58 @@ class UserPostListView(ListView):
     model = Post
     template_name = 'recepti/user_posts.html'  # <app>/<model>_<viewtype>.html
     context_object_name = 'posts'
-    paginate_by = 5
+
+    paginate_by = 12
 
     def get_queryset(self):
         user = get_object_or_404(User, username=self.kwargs.get('username'))
         return Post.objects.filter(autor=user).order_by('-date_posted')
+
+
+class CategoryPredjeloListView(ListView):
+    model = Post
+    template_name = 'recepti/category_predjelo.html'
+    context_object_name = 'category-predjelo'
+    paginate_by = 12
+    
+
+    def get_context_data(self, **kwargs):
+        context = {
+            'posts': Post.objects.all()
+        }
+        return context
+
+class CategoryGlavnoListView(ListView):
+    model = Post
+    template_name = 'recepti/category_glavno.html'
+    context_object_name = 'category-glavno'
+    paginate_by = 12
+
+    def get_context_data(self, **kwargs):
+        context = {
+            'posts': Post.objects.all()
+        }
+        return context
+
+class CategoryDesertListView(ListView):
+    model = Post
+    template_name = 'recepti/category_desert.html'
+    context_object_name = 'category-desert'
+    paginate_by = 12
+
+    def get_context_data(self, **kwargs):
+        context = {
+            'posts': Post.objects.all()
+        }
+        return context
+
 
 class PostDetailView(DetailView):
     model = Post
 
 class PostCreateView(LoginRequiredMixin, CreateView):
     model = Post
-    fields = ['naslov', 'sazetak', 'sadrzaj', 'slika']
+    fields = ['naslov','kategorija', 'sazetak', 'sadrzaj', 'slika']
 
     def form_valid(self, form):
         form.instance.autor = self.request.user
@@ -78,7 +118,7 @@ class CommentCreateView(LoginRequiredMixin, CreateView):
 
 class PostUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = Post
-    fields = ['naslov', 'sazetak', 'sadrzaj', 'slika']
+    fields = ['naslov','kategorija', 'sazetak', 'sadrzaj', 'slika']
 
     def form_valid(self, form):
         form.instance.autor = self.request.user

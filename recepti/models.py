@@ -10,27 +10,48 @@ from PIL import Image
  
 #SQL modeli
 class Post(models.Model):
+
+    kategorije = [
+        ('pr','predjelo'),
+        ('gl','glavno jelo'),
+        ('de','desert'),
+    ]
+
     naslov = models.CharField(max_length=100)
     sazetak = models.TextField(max_length=200, default='Super recept! Usudi se probati...')
     sadrzaj = models.TextField()
     slika = models.ImageField(default='default_pict.jpg', upload_to='post_pics')
     date_posted = models.DateTimeField(default=timezone.now)
     autor = models.ForeignKey(User, on_delete=models.CASCADE)
-
+    kategorija = models.CharField(max_length=2, choices=kategorije, default = 'gl')
     like_count= models.IntegerField(default=0)
     #dislikes= models.PositiveIntegerField(default=0)
 
-
-    def save(self, *args, **kwargs):
-        super().save(*args, **kwargs)
-        img = Image.open(self.slika.path)
-        img.save(self.slika.path)
 
     def __str__(self):
         return self.naslov
 
     def get_absolute_url(self):
         return reverse('post-detail', kwargs={'pk': self.pk})
+
+
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)
+
+        img = Image.open(self.slika.path)
+
+        if img.height > 640 or img.width > 320:
+            output_size = (640, 320)
+            img.thumbnail(output_size)
+            img.save(self.slika.path)
+        else:
+            output_size = (640, 320)
+            img.thumbnail(output_size)
+            img.save(self.slika.path)
+
+
+
+
 
 class Comment(models.Model):
     post = models.ForeignKey(Post, related_name='comments', on_delete=models.CASCADE)

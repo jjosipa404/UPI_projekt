@@ -9,7 +9,10 @@ from .views import (
     UserPostListView,
     CommentCreateView,
     CommentDeleteView,
-    CommentUpdateView
+    CommentUpdateView,
+    CategoryPredjeloListView,
+    CategoryGlavnoListView,
+    CategoryDesertListView,
 
 )
 from . import views
@@ -17,6 +20,9 @@ urlpatterns = [
 
     path('', PostListView.as_view(), name='recepti-home'),
     path('user/<str:username>', UserPostListView.as_view(), name='user-posts'),
+    path('posts/predjela', CategoryPredjeloListView.as_view(), name='category-predjelo'),
+    path('posts/glavna', CategoryGlavnoListView.as_view(), name='category-glavno'),
+    path('posts/deserti', CategoryDesertListView.as_view(), name='category-desert'),
     path('post/<int:pk>/', PostDetailView.as_view(), name='post-detail'),
     path('post/new/', PostCreateView.as_view(), name='post-create'),
     path('post/<int:pk>/update/', PostUpdateView.as_view(), name='post-update'),

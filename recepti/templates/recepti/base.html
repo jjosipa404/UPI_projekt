@@ -10,8 +10,10 @@
   
   <!-- Bootstrap CSS -->
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
   <link rel="stylesheet" type="text/css" href="{% static 'recepti/main.css' %}">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link href="https://fonts.googleapis.com/css?family=Baskervville&display=swap" rel="stylesheet">
 
   {% if title %}
   <title>Recepti-{{ title }}</title>
@@ -56,8 +58,8 @@
               </header>
 
               <main role="main" class="container">
-                    <div class="row">
-                      <div class="col-md-8">
+                 
+                    
                         {% if messages %}
                           {% for message in messages %}
                             <div class="alert alert-{{ message.tags }}">
@@ -65,9 +67,7 @@
                             </div>
                           {% endfor %}
                         {% endif %}
-                        {% block content %}{% endblock %}
-                      </div>
-                      <div class="col-md-4">
+
                         <div class="content-section">
                           <h3>Pretraživanje</h3>
                           <p class='text-muted'> Unesite pojam
@@ -77,9 +77,20 @@
                               </form>
                             </div>
                           </p>
+                          <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{% url 'category-predjelo' %}">Predjela</a>
+                          <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{% url 'category-glavno' %}">Glavna jela</a>
+                          <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{% url 'category-desert'  %}">Deserti</a>
+
                         </div>
-                      </div>
-                    </div>
+
+                        <div class="w3-row-padding">
+                        {% block content %}{% endblock %}
+                        </div>
+
+                    
+                        
+                      
+                 
                   </main>
                   <!-- Optional JavaScript -->
 
