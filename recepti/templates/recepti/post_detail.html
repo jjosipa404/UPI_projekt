@@ -26,7 +26,8 @@
       <hr>
       <p class="article-content">{{ object.sadrzaj }}</p>
       <div class="btn-group" role="group" aria-label="Basic example">
-          <a href="#" class="nav-item nav-link"><button type="button" class="btn btn-secondary">Sviđa mi se</button></a>
+          <a href="#" class="nav-item nav-link"><button type="button" data-type="Post" data-action="like" title="Like" data-id="{{ object.id }}" class="btn btn-secondary">Sviđa mi se</button><span data-count="like">{{ object.votes.likes.count }}</span></a>
+          <a href="#" class="nav-item nav-link"><button type="button" data-type="Post" data-action="dislike" title="Dislike" data-id="{{ object.id }}" class="btn btn-secondary">Ne sviđa mi se</button><span data-count="dislike">{{ object.votes.dislikes.count }}</span></a>
           <a class="nav-item nav-link" href="{% url 'post-comment' object.id %}"><button type="button" class="btn btn-secondary">Novi komentar</button></a>
         </div>
       <!--

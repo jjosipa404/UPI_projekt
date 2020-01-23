@@ -16,6 +16,12 @@ from .views import (
 
 )
 from . import views
+from django.conf.urls import url
+from django.contrib.auth.decorators import login_required
+from .models import LikeDislike
+from .models import Post, Comment
+
+app_name='ajax'
 urlpatterns = [
 
     path('', PostListView.as_view(), name='recepti-home'),
@@ -30,6 +36,9 @@ urlpatterns = [
     path('post/<int:pk>/comment/', CommentCreateView.as_view(), name='post-comment'),
     path('post/comment/<int:pk>/delete', CommentDeleteView.as_view(), name='post-comment-delete'),
     path('post/comment/<int:pk>/update', CommentUpdateView.as_view(), name='post-comment-update'),
-    #path('post/<int:pk>/<int:pk>/preference/<int:preference>/',views.postpreference,name='postpreference'),
+    url(r'^post/(?P<pk>\d+)/like/$', login_required(views.VotesView.as_view(model=Post, vote_type=LikeDislike.LIKE)),name='post_like'),
+    url(r'^post/(?P<pk>\d+)/dislike/$', login_required(views.VotesView.as_view(model=Post, vote_type=LikeDislike.DISLIKE)),name='post_dislike'),
+    url(r'^comment/(?P<pk>\d+)/like/$', login_required(views.VotesView.as_view(model=Comment, vote_type=LikeDislike.LIKE)),name='comment_like'),
+    url(r'^comment/(?P<pk>\d+)/dislike/$', login_required(views.VotesView.as_view(model=Comment, vote_type=LikeDislike.DISLIKE)),name='comment_dislike'),
     path('about/', views.about, name='recepti-about')
 ]
