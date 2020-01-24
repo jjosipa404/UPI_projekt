@@ -36,6 +36,7 @@ INSTALLED_APPS = [
     'users.apps.UsersConfig',
     'crispy_forms',
     'grappelli',
+    'vote',
     'django_filters',
     'bootstrapform',
     'django.contrib.admin',

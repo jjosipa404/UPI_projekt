@@ -1,11 +1,10 @@
 import json
 from django.http import HttpResponse
-from .models import LikeDislike
 from django.contrib.contenttypes.models import ContentType
 from django.shortcuts import render, get_object_or_404
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.models import User,
+from django.contrib.auth.models import User
 from django.views.generic import (
 
     ListView,
@@ -16,7 +15,7 @@ from django.views.generic import (
 
 )
 
-from .models import Post, Comment #, Preference
+from .models import Post, Comment 
 from .filters import PostFilter
 
 def home(request):
@@ -60,6 +59,24 @@ class UserPostListView(ListView):
         user = get_object_or_404(User, username=self.kwargs.get('username'))
         return Post.objects.filter(autor=user).order_by('-date_posted')
 
+class UserFavoriteListView(ListView):
+    model = Post
+    template_name = 'recepti/category_favorite.html'  # <app>/<model>_<viewtype>.html
+    context_object_name = 'posts'
+    success_url = '/'
+
+    paginate_by = 12
+
+    def get_queryset(self):
+        posts = Post.objects.all()
+        user = get_object_or_404(User, username=self.kwargs.get('username'))
+        liked_posts = []
+        for post in posts:
+            ids = post.votes.user_ids()
+            for id,time in ids:
+                if id == user.id:
+                    liked_posts.append(post)
+        return liked_posts
 
 class CategoryPredjeloListView(ListView):
     model = Post
@@ -147,6 +164,21 @@ class CommentUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
             return True
         return False
 
+class LikeView(LoginRequiredMixin,UpdateView):
+    model = Post
+    fields = []
+    template_name = 'recepti/like_form.html'
+    context_object_name = 'post-like'
+    
+
+    def form_valid(self, form):
+        post = Post.objects.get(pk=self.kwargs.get('pk'))
+        success_url = '/post/'+ str(self.kwargs.get('pk'))
+        user_id = self.request.user.id
+        if not post.votes.exists(user_id):
+            post.votes.up(user_id)
+        return super().form_valid(form)
+
 class PostDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     model = Post
     success_url = '/'
@@ -166,105 +198,6 @@ class CommentDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
         if self.request.user == comment.user or self.request.user == comment.post.autor:
             return True
         return False
-
-class VotesView(view):
-    model = None #data model - posts or comments
-    vote_type = None #vote type dislike/like
-
-    def post(self, request, pk):
-        obj = self.model.objects.get(pk=pk)
-        #genericForeignKey does not support get_or_create
-        try:
-            likedislike=LikeDislike.objects.get(content_type=ContentType.objects.get_for_model(obj), object_id=obj.id, user=request.user)
-            if likedislike.vote = self.vote_type:
-                likedislike.vote = self.vote_type
-                likedislike.save(update_fields=['vote'])
-                result = True
-            else:
-                likedislike.delete()
-                result = False
-        except LikeDislike.DoesNotExist:
-            obj.votes.create(user=request.user, vote=self.vote_type)
-            result = True
-        
-        return HttpResponse(
-            json.dumps({
-                "result": result,
-                "like_count": obj.votes.likes().count(),
-                "dislike_count": obj.votes.dilikes().count(),
-                "sum_rating": obj.votes.sum_rating()
-            }),
-            content_type="application/json"
-        )
-
-""" @login_required
-def postpreference(request, postid, userpreference):
-    if request.method == "POST":
-        eachpost = get_object_or_404(Post, id=postid)
-        obj=''
-        valueobj=''
-        try:
-            obj= Preference.objects.get(user= request.user, post= eachpost)
-            valueobj= obj.value #value of userpreference
-            valueobj= int(valueobj)
-            userpreference= int(userpreference)
-            if valueobj != userpreference:
-                obj.delete()
-                upref= Preference()
-                upref.user= request.user
-                upref.post= eachpost
-                upref.value= userpreference
-                if userpreference == 1 and valueobj != 1:
-                    eachpost.likes += 1
-                    eachpost.dislikes -=1
-                elif userpreference == 2 and valueobj != 2:
-                    eachpost.dislikes += 1
-                    eachpost.likes -= 1
-                    upref.save()
-                    eachpost.save()
-                    context= {'eachpost': eachpost,
-                              'postid': postid}
-                    return render (request, 'recepti/home.html')
-
-                elif valueobj == userpreference:
-                    obj.delete()   
-                    if userpreference == 1:
-                        eachpost.likes -= 1
-                    elif userpreference == 2:
-                        eachpost.dislikes -= 1
-
-                    eachpost.save()
-                    context= {'eachpost': eachpost,
-                             'postid': postid}
-                    return render (request, 'recepti/home.html')
-                                
-                        
-        
-                
-        except Preference.DoesNotExist:
-            upref= Preference()
-            upref.user= request.user
-            upref.post= eachpost
-            upref.value= userpreference
-            userpreference= int(userpreference)
-            if userpreference == 1:
-                eachpost.likes += 1
-            elif userpreference == 2:
-                eachpost.dislikes +=1
-
-            upref.save()
-            eachpost.save()                            
-            context= {'eachpost': eachpost,
-                       'postid': postid}
-            return render (request, 'recepti/home.html')
-
-
-    else:
-        eachpost= get_object_or_404(Post, id=postid)
-        context= {'eachpost': eachpost,
-                  'postid': postid}
-
-        return render (request, 'posts/detail.html', context) """
 
 def about(request):
     return render(request, 'recepti/about.html', {'title': 'O nama'})

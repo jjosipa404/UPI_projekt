@@ -44,6 +44,7 @@
                         {% if user.is_authenticated %}
                           <a class="nav-item nav-link" href="{% url 'post-create' %}">Novi post</a>
                           <a class="nav-item nav-link" href="{% url 'user-posts' user.username %}">Moji recepti</a>
+                          <a class="nav-item nav-link" href="{% url 'user-favorite' user.username %}">Moji favoriti</a>
                           <a class="nav-item nav-link" href="{% url 'profile' %}"><i class="fa fa-user" aria-hidden="true"></i> {{ user }}</a>
                           <a class="nav-item nav-link" href="{% url 'logout' %}">Odjavi se</a>
                         {% else %}
