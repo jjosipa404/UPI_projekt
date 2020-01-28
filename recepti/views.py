@@ -179,6 +179,20 @@ class LikeView(LoginRequiredMixin,UpdateView):
             post.votes.up(user_id)
         return super().form_valid(form)
 
+class DislikeView(LoginRequiredMixin,UpdateView):
+    model = Post
+    fields = []
+    context_object_name = 'post-dislike'
+    template_name = 'recepti/dislike_form.html'
+    
+    def form_valid(self, form):
+        post = Post.objects.get(pk=self.kwargs.get('pk'))
+        success_url = '/post/'+ str(self.kwargs.get('pk'))
+        user_id = self.request.user.id
+        
+        post.votes.down(user_id)
+        return super().form_valid(form)
+
 class PostDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     model = Post
     success_url = '/'

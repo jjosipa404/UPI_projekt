@@ -28,6 +28,7 @@
       <div class="btn-group" role="group" aria-label="Basic example">
           
           <a class="nav-item nav-link" href="{% url 'post-like' object.id %}"><button type="button" class="btn btn-secondary">Like</button></a>
+          <a class="nav-item nav-link" href="{% url 'post-dislike' object.id %}"><button type="button" class="btn btn-secondary">Dislike</button></a>
           <a class="nav-item nav-link" href="{% url 'post-comment' object.id %}"><button type="button" class="btn btn-secondary">Novi komentar</button></a>
         </div>
       <!--

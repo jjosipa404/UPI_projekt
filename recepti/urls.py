@@ -15,6 +15,7 @@ from .views import (
     CategoryGlavnoListView,
     CategoryDesertListView,
     LikeView,
+    DislikeView,
 
 )
 from . import views
@@ -38,5 +39,6 @@ urlpatterns = [
     path('post/comment/<int:pk>/delete', CommentDeleteView.as_view(), name='post-comment-delete'),
     path('post/comment/<int:pk>/update', CommentUpdateView.as_view(), name='post-comment-update'),
     path('post/<int:pk>/like', LikeView.as_view(), name= 'post-like'),
+    path('post/<int:pk>/dislike', DislikeView.as_view(), name= 'post-dislike'),
     path('about/', views.about, name='recepti-about')
 ]
