@@ -5,12 +5,11 @@ from .models import Post, Comment
 admin.site.register(Post)
 
 class CommentAdmin(admin.ModelAdmin):
-    list_display = ('user', 'email', 'approved', 'created')
-    list_filter = ('aproved', 'created')
+    list_display = ('user', 'email', 'created')
+    list_filter = ('created')
     search_fields = ('user', 'email', 'content')
-    actions = ['approve_comments']
 
-    def approve_comments(self, request, queryset):
-        queryset.update(approved = True)
+
+    
 
 admin.site.register(Comment)
