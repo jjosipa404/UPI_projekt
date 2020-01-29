@@ -10,22 +10,6 @@
             <h5><a class="article-title" href="{% url 'post-detail' post.id %}">{{ post.naslov }}</a></h5>
 
     </div>
-    <!--
-    <a href="{% url 'post-detail' post.id %}"> <img src="{{ post.slika.url }}" style="width: 150px;height: 100px;" > </a>
-        <article class="media content-section">
-          <img class="rounded-circle article-img" src="{{ post.autor.profile.image.url }}">
-          <div class="media-body">
-            <div class="article-metadata">
-              <a class="mr-2" id="ime" href="{% url 'user-posts' post.autor.username %}">{{ post.autor }}</a>
-              <small class="text-muted">{{ post.date_posted|date:"F d, Y" }}</small>
-              <small class="">{{ post.comments.count }}</small>  <i class="fa fa-comment"></i>
-              <small>0</small>  <i class="fa fa-heart"></i><br>
-            </div>
-            <h2><a class="article-title" href="{% url 'post-detail' post.id %}">{{ post.naslov }}</a></h2>
-            <p class="article-content">{{ post.sazetak }}</p>
-            <a href="{% url 'post-detail' post.id %}" class="article-title">Pročitajte više <i class="fa fa-angle-double-right"></i></a>
-          </div>
-        </article>-->
     {% endfor %}
     {% if is_paginated %}
   <div class="w3-row-padding w3-center">

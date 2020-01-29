@@ -7,10 +7,11 @@
         <fieldset class="form-group">
             <legend class="border-bottom mb-4">Kliknite Dislike ako želite ukloniti ovaj recept iz kategorije Favorita</legend>
             {{ form|crispy }}
+            <div class="form-group">
+                <button class="btn btn-outline-secondary" type="submit">Dislike</button>
+            </div>
         </fieldset>
-        <div class="form-group">
-            <button class="btn btn-outline-secondary" type="submit">Dislike</button>
-        </div>
+        
     </form>
 </div>
 {% endblock content %}

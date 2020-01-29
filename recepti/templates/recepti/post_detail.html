@@ -31,20 +31,7 @@
           <a class="nav-item nav-link" href="{% url 'post-dislike' object.id %}"><button type="button" class="btn btn-secondary">Dislike</button></a>
           <a class="nav-item nav-link" href="{% url 'post-comment' object.id %}"><button type="button" class="btn btn-secondary">Novi komentar</button></a>
         </div>
-      <!--
-      <a href="#" onClick="document.getElementById('likebutton').submit()">Like This Post</a> 
-      {{object.likes}}   |   <a href="#" onClick="document.getElementById('dislikebutton').submit()">Dislike This Post</a> {{object.dislikes}}
 
-        <form id="likebutton" method="POST" action="{{ object.id }}/preference/1/">
-        {% csrf_token %}
-        <input type="hidden">
-        </form>
-        
-        <form id="dislikebutton" method="POST" action="{{ object.id }}/preference/2/">
-        {% csrf_token %}
-        <input type="hidden">
-        </form>  -->
-        
         <hr>
         <p> Likes: {{ object.votes.count }} </p>
         <p> Comments: {{ object.comments.count }} </p>
